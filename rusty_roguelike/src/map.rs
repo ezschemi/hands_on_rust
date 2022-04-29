@@ -36,16 +36,32 @@ impl Map {
         }
     }
 
-    pub fn render(&self, ctx: &mut BTerm) {
-        for y in 0..SCREEN_HEIGHT {
-            for x in 0..SCREEN_WIDTH {
-                let index = map_index(x, y);
-                match self.tiles[index] {
-                    TileType::Wall => {
-                        ctx.set(x, y, SLATE_GREY, BLACK, to_cp437(WALL_SYMBOL));
-                    }
-                    TileType::Floor => {
-                        ctx.set(x, y, GREEN, BLACK, to_cp437(FLOOR_SYMBOL));
+    pub fn render(&self, ctx: &mut BTerm, camera: &Camera) {
+        ctx.set_active_console(0);
+
+        for y in camera.top_y..camera.bottom_y {
+            for x in camera.left_x..camera.right_x {
+                if self.in_bounds(Point::new(x, y)) {
+                    let index = map_index(x, y);
+                    match self.tiles[index] {
+                        TileType::Floor => {
+                            ctx.set(
+                                x - camera.left_x,
+                                y - camera.top_y,
+                                WHITE,
+                                BLACK,
+                                to_cp437(FLOOR_SYMBOL),
+                            );
+                        }
+                        TileType::Wall => {
+                            ctx.set(
+                                x - camera.left_x,
+                                y - camera.top_y,
+                                WHITE,
+                                BLACK,
+                                to_cp437(WALL_SYMBOL),
+                            );
+                        }
                     }
                 }
             }
