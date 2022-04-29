@@ -42,7 +42,7 @@ impl Map {
                 let index = map_index(x, y);
                 match self.tiles[index] {
                     TileType::Wall => {
-                        ctx.set(x, y, YELLOW, BLACK, to_cp437(WALL_SYMBOL));
+                        ctx.set(x, y, SLATE_GREY, BLACK, to_cp437(WALL_SYMBOL));
                     }
                     TileType::Floor => {
                         ctx.set(x, y, GREEN, BLACK, to_cp437(FLOOR_SYMBOL));
