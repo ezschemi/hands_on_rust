@@ -8,6 +8,7 @@ pub fn player_input(
     #[resource] map: &Map,
     #[resource] key: &Option<VirtualKeyCode>,
     #[resource] camera: &mut Camera,
+    #[resource] turn_state: &mut TurnState,
 ) {
     // SubWorld is like World, but can only see the components that were requested
 
@@ -28,6 +29,7 @@ pub fn player_input(
                 if map.can_enter_tile(destination) {
                     *pos = destination;
                     camera.on_player_move(destination);
+                    *turn_state = TurnState::PlayerTurn;
                 }
             });
         }
