@@ -10,6 +10,7 @@ pub fn spawn_player(ecs: &mut World, pos: Point) {
                 color: ColorPair::new(WHITE, BLACK),
                 glyph: to_cp437('@'),
             },
+            
         ),
     );
 }
@@ -27,5 +28,6 @@ pub fn spawn_monster(ecs: &mut World, rng: &mut RandomNumberGenerator, pos: Poin
                 _ => to_cp437('g'), //goblin
             },
         },
+        MovingRandomly {},
     ));
 }
