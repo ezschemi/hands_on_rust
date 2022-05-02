@@ -13,7 +13,7 @@ pub fn spawn_player(ecs: &mut World, pos: Point) {
                 glyph: to_cp437('@'),
             },
             Health {
-                current: 10,
+                current: 20,
                 max: 20,
             },
         ),
@@ -25,11 +25,11 @@ fn goblin() -> (i32, String, FontCharType) {
     (hitpoints, "Goblin".to_string(), to_cp437('g'))
 }
 fn ettin() -> (i32, String, FontCharType) {
-    let hitpoints = 1;
+    let hitpoints = 6;
     (hitpoints, "Ettin".to_string(), to_cp437('E'))
 }
 fn ogre() -> (i32, String, FontCharType) {
-    let hitpoints = 1;
+    let hitpoints = 4;
     (hitpoints, "Ogre".to_string(), to_cp437('O'))
 }
 fn orc() -> (i32, String, FontCharType) {
@@ -39,8 +39,10 @@ fn orc() -> (i32, String, FontCharType) {
 
 pub fn spawn_monster(ecs: &mut World, rng: &mut RandomNumberGenerator, pos: Point) {
     let (hp, name, glyph) = match rng.roll_dice(1, 10) {
-        1..=8 => goblin(),
-        _ => orc(),
+        1..=6 => goblin(),
+        6..=7 => orc(),
+        7..=8 => ogre(),
+        _ => ettin(),
     };
 
     ecs.push((
