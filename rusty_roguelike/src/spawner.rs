@@ -16,14 +16,13 @@ pub fn spawn_player(ecs: &mut World, pos: Point) {
                 current: 20,
                 max: 20,
             },
+            Name {
+                name: "Player".to_string(),
+            },
         ),
     );
 }
 
-fn goblin() -> (i32, String, FontCharType) {
-    let hitpoints = 1;
-    (hitpoints, "Goblin".to_string(), to_cp437('g'))
-}
 fn ettin() -> (i32, String, FontCharType) {
     let hitpoints = 6;
     (hitpoints, "Ettin".to_string(), to_cp437('E'))
@@ -35,6 +34,10 @@ fn ogre() -> (i32, String, FontCharType) {
 fn orc() -> (i32, String, FontCharType) {
     let hitpoints = 2;
     (hitpoints, "Orc".to_string(), to_cp437('o'))
+}
+fn goblin() -> (i32, String, FontCharType) {
+    let hitpoints = 1;
+    (hitpoints, "Goblin".to_string(), to_cp437('g'))
 }
 
 pub fn spawn_monster(ecs: &mut World, rng: &mut RandomNumberGenerator, pos: Point) {
@@ -61,6 +64,25 @@ pub fn spawn_monster(ecs: &mut World, rng: &mut RandomNumberGenerator, pos: Poin
     ));
 }
 
+pub fn spawn_monster_ettin(ecs: &mut World, pos: Point) {
+    let (hp, name, glyph) = ettin();
+
+    ecs.push((
+        Enemy,
+        pos,
+        Render {
+            color: ColorPair::new(WHITE, BLACK),
+            glyph,
+        },
+        ChasingPlayer {},
+        Health {
+            current: hp,
+            max: hp,
+        },
+        Name { name },
+    ));
+}
+
 pub fn spawn_amulet_of_yala(ecs: &mut World, position: Point) {
     ecs.push((
         Item,
@@ -70,6 +92,8 @@ pub fn spawn_amulet_of_yala(ecs: &mut World, position: Point) {
             color: ColorPair::new(WHITE, BLACK),
             glyph: to_cp437('|'),
         },
-        Name{ name: "Amulet of Yala".to_string() },
+        Name {
+            name: "Amulet of Yala".to_string(),
+        },
     ));
 }

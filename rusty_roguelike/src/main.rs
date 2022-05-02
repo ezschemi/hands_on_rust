@@ -106,11 +106,21 @@ impl State {
         }
     }
 
-    fn victory(&mut self, ctx: &mut BTerm) { 
+    fn victory(&mut self, ctx: &mut BTerm) {
         ctx.set_active_console(2);
         ctx.print_color_centered(2, GREEN, BLACK, "You have won.");
-        ctx.print_color_centered(4, WHITE, BLACK, "You put on the Amulet of Yala and feel its power course through your veins.");
-        ctx.print_color_centered(5, WHITE, BLACK, "Your town is saved, and you can return to your normal life.");
+        ctx.print_color_centered(
+            4,
+            WHITE,
+            BLACK,
+            "You put on the Amulet of Yala and feel its power course through your veins.",
+        );
+        ctx.print_color_centered(
+            5,
+            WHITE,
+            BLACK,
+            "Your town is saved, and you can return to your normal life.",
+        );
         ctx.print_color_centered(9, GREEN, BLACK, "Press a to play again.");
 
         if let Some(VirtualKeyCode::A) = ctx.key {

@@ -1,9 +1,7 @@
-use std::f32::consts::E;
-
 use crate::prelude::*;
 
 #[system]
-#[write_component(Point)]
+#[read_component(Point)]
 #[read_component(Player)]
 #[read_component(Enemy)]
 #[write_component(Health)]
@@ -16,8 +14,9 @@ pub fn player_input(
     // SubWorld is like World, but can only see the components that were requested
 
     let mut players = <(Entity, &Point)>::query().filter(component::<Player>());
+    let mut enemies = <(Entity, &Point)>::query().filter(component::<Enemy>());
 
-    if let Some(key) = key {
+    if let Some(key) = *key {
         let delta = match key {
             VirtualKeyCode::Left => Point::new(-1, 0),
             VirtualKeyCode::Right => Point::new(1, 0),
@@ -30,8 +29,6 @@ pub fn player_input(
             .iter(ecs)
             .find_map(|(entity, position)| Some((*entity, *position + delta)))
             .unwrap();
-
-        let mut enemies = <(Entity, &Point)>::query().filter(component::<Enemy>());
 
         let mut did_something = false;
 
@@ -67,7 +64,7 @@ pub fn player_input(
             }
         }
 
-        // grant the player health if she fas waiting in place
+        // grant the player health if she was waiting in place
         if !did_something {
             if let Ok(mut health) = ecs
                 .entry_mut(player_entity)

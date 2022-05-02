@@ -1,7 +1,5 @@
 use crate::prelude::*;
 
-use super::entity_render;
-
 #[system]
 #[read_component(Point)]
 #[read_component(ChasingPlayer)]
@@ -52,6 +50,7 @@ pub fn chasing(#[resource] map: &Map, ecs: &SubWorld, commands: &mut CommandBuff
                             },
                         ));
                     }
+                    attacked = true;
                 });
             if !attacked {
                 commands.push((
