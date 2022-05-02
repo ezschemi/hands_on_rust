@@ -4,7 +4,7 @@ const DEFAULT_DAMAGE: i32 = 1;
 
 #[system]
 #[read_component(WantsToAttack)]
-#[read_component(Health)]
+#[write_component(Health)]
 pub fn combat(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
     let mut attackers = <(Entity, &WantsToAttack)>::query();
 
