@@ -37,3 +37,6 @@ pub struct Health {
 pub struct Name {
     pub name: String,
 }
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct ChasingPlayer;
