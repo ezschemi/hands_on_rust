@@ -2,6 +2,9 @@ use legion::query::Or;
 
 use crate::prelude::*;
 
+const DEFAULT_FOV_PLAYER: i32 = 8;
+const DEFAULT_FOV_MONSTER: i32 = 5;
+
 pub fn spawn_player(ecs: &mut World, pos: Point) {
     ecs.push(
         // this creates a new tuple
@@ -19,6 +22,7 @@ pub fn spawn_player(ecs: &mut World, pos: Point) {
             Name {
                 name: "Player".to_string(),
             },
+            FieldOfView::new(DEFAULT_FOV_PLAYER),
         ),
     );
 }
@@ -61,6 +65,7 @@ pub fn spawn_monster(ecs: &mut World, rng: &mut RandomNumberGenerator, pos: Poin
             max: hp,
         },
         Name { name },
+        FieldOfView::new(DEFAULT_FOV_MONSTER),
     ));
 }
 
@@ -80,6 +85,7 @@ pub fn spawn_monster_ettin(ecs: &mut World, pos: Point) {
             max: hp,
         },
         Name { name },
+        FieldOfView::new(DEFAULT_FOV_MONSTER),
     ));
 }
 

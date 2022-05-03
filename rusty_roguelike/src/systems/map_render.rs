@@ -1,7 +1,13 @@
 use crate::prelude::*;
 
 #[system]
-pub fn map_render(#[resource] map: &Map, #[resource] camera: &Camera) {
+#[read_component(FieldOfView)]
+#[read_component(Player)]
+pub fn map_render(ecs: &SubWorld, #[resource] map: &Map, #[resource] camera: &Camera) {
+    let mut fovs = <&FieldOfView>::query().filter(component::<Player>());
+
+    let player_fov = fovs.iter(ecs).nth(0).unwrap();
+
     let mut draw_batch = DrawBatch::new();
     draw_batch.target(0);
 
@@ -10,7 +16,7 @@ pub fn map_render(#[resource] map: &Map, #[resource] camera: &Camera) {
             let p = Point::new(x, y);
             let offset = Point::new(camera.left_x, camera.top_y);
 
-            if map.in_bounds(p) {
+            if map.in_bounds(p) && player_fov.visible_tiles.contains(&p) {
                 let index = map_index(x, y);
                 let glyph = match map.tiles[index] {
                     TileType::Floor => to_cp437('.'),
