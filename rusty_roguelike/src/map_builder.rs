@@ -5,6 +5,7 @@ const NUM_ROOMS: usize = 5;
 pub struct MapBuilder {
     pub map: Map,         // copy of the original map to work with
     pub rooms: Vec<Rect>, // list of rooms that will be added to the map
+    pub spawn_locations: Vec<Point>,
     pub player_start: Point,
     pub amulet_start: Point,
 }
@@ -85,6 +86,7 @@ impl MapBuilder {
         let mut mb = MapBuilder {
             map: Map::new(),
             rooms: Vec::new(),
+            spawn_locations: Vec::new(),
             player_start: Point::zero(),
             amulet_start: Point::zero(),
         };
@@ -101,6 +103,11 @@ impl MapBuilder {
             &mb.map,
             1024.0,
         );
+
+        // the player spawns in the first room, skip it
+        mb.rooms.iter().skip(1).for_each(|r| {
+            mb.spawn_locations.push(r.center());
+        });
 
         const UNREACHABLE: &f32 = &f32::MAX;
 

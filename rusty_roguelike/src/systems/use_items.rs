@@ -14,9 +14,11 @@ pub fn use_items(ecs: &mut SubWorld, commands: &mut CommandBuffer, #[resource] m
             let item = ecs.entry_ref(activate.item);
             if let Ok(item) = item {
                 if let Ok(healing) = item.get_component::<ProvidesHealing>() {
+                    println!("Using a healing item: +{} hp", healing.amount);
                     healing_effects_to_apply.push((activate.used_by, healing.amount));
                 }
                 if let Ok(_map_revealer) = item.get_component::<RevealsDungeonMap>() {
+                    println!("Using a map revealer...");
                     map.revealed_tiles.iter_mut().for_each(|tile| *tile = true);
                 }
             }
