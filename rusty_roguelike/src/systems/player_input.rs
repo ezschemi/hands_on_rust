@@ -8,6 +8,7 @@ use crate::prelude::*;
 #[read_component(Item)]
 #[read_component(InInventory)]
 #[read_component(Name)]
+#[read_component(Weapon)]
 pub fn player_input(
     ecs: &mut SubWorld,
     commands: &mut CommandBuffer,
@@ -40,6 +41,17 @@ pub fn player_input(
                         commands.add_component(*entity, InInventory(player));
 
                         println!("Player picked up: {}", _item_name.name);
+
+                        if let Ok(e) = ecs.entry_ref(*entity) {
+                            if e.get_component::<Weapon>().is_ok() {
+                                <(Entity, &InInventory, &Weapon)>::query()
+                                    .iter(ecs)
+                                    .filter(|(_, i, _)| i.0 == player)
+                                    .for_each(|(e, i, w)| {
+                                        commands.remove(*e);
+                                    })
+                            }
+                        }
                     });
                 Point::new(0, 0)
             }

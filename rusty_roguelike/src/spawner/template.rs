@@ -30,6 +30,21 @@ pub struct Templates {
     pub entities: Vec<Template>,
 }
 
+impl Template {
+    pub fn new() -> Self {
+        Template {
+            entity_type: EntityType::Item,
+            levels: HashSet::new(),
+            frequency: 1,
+            name: "new item".to_string(),
+            glyph: '.',
+            provides: None,
+            hp: None,
+            base_damage: None,
+        }
+    }
+}
+
 impl Templates {
     pub fn load() -> Self {
         const ResourcesFilePath: &str = "resources/template.ron";
@@ -66,7 +81,7 @@ impl Templates {
         commands.flush(ecs);
     }
 
-    fn spawn_entity(
+    pub fn spawn_entity(
         &self,
         p: &Point,
         template: &Template,

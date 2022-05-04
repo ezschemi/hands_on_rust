@@ -48,7 +48,10 @@ pub fn combat(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
         {
             println!("Health before attack: {}", health.current);
 
-            println!("Doing {} + {} = {} damage.", base_damage, weapon_damage, final_damage);
+            println!(
+                "Doing {} + {} = {} damage.",
+                base_damage, weapon_damage, final_damage
+            );
 
             health.current -= final_damage;
 

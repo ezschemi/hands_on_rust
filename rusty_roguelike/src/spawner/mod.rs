@@ -1,6 +1,7 @@
 mod template;
 
 use crate::prelude::*;
+use template::Template;
 use template::Templates;
 
 const DEFAULT_FOV_PLAYER: i32 = 8;
@@ -69,4 +70,21 @@ pub fn spawn_level(
 ) {
     let templates = Templates::load();
     templates.spawn_entities(ecs, rng, level, spawn_points);
+}
+
+pub fn spawn_entity(ecs: &mut World, name: &str, spawn_point: &Point) {
+    let templates = Templates::load();
+
+    let mut commands = CommandBuffer::new(ecs);
+
+    let t = templates
+        .entities
+        .iter()
+        .filter(|e| e.name == name)
+        .find_map(|e| Some(e))
+        .unwrap();
+
+    templates.spawn_entity(spawn_point, t, &mut commands);
+
+    commands.flush(ecs);
 }
