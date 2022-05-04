@@ -24,6 +24,7 @@ pub fn spawn_player(ecs: &mut World, pos: Point) {
                 name: "Player".to_string(),
             },
             FieldOfView::new(DEFAULT_FOV_PLAYER),
+            Damage(1),
         ),
     );
 }
