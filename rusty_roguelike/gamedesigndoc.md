@@ -35,4 +35,6 @@ The hero's hometown is suffering from a plague of monsters. Welling up from the 
 7. Consider some visual effects to make combat more visceral.
 8. Consider keeping score.
 9. Add gamepad support.
+10. sound effects, for e.g. using items and combat
+11. background music
 
