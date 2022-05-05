@@ -12,8 +12,6 @@ use crate::prelude::*;
 // ------------------------------------> x-axis
 
 const NUM_TILES: usize = (SCREEN_WIDTH * SCREEN_HEIGHT) as usize;
-const WALL_SYMBOL: char = '#';
-const FLOOR_SYMBOL: char = '.';
 
 #[derive(Copy, Clone, PartialEq)]
 pub enum TileType {

@@ -7,6 +7,8 @@ use std::fs::File;
 
 use crate::spawner::DEFAULT_FOV_MONSTER;
 
+const RESOURCES_FILE_PATH: &str = "resources/template.ron";
+
 #[derive(Clone, Deserialize, Debug)]
 pub struct Template {
     pub entity_type: EntityType,
@@ -30,26 +32,10 @@ pub struct Templates {
     pub entities: Vec<Template>,
 }
 
-impl Template {
-    pub fn new() -> Self {
-        Template {
-            entity_type: EntityType::Item,
-            levels: HashSet::new(),
-            frequency: 1,
-            name: "new item".to_string(),
-            glyph: '.',
-            provides: None,
-            hp: None,
-            base_damage: None,
-        }
-    }
-}
-
 impl Templates {
     pub fn load() -> Self {
-        const ResourcesFilePath: &str = "resources/template.ron";
-        let file = File::open(ResourcesFilePath)
-            .expect(&format!("Failed to open file: {}", ResourcesFilePath));
+        let file = File::open(RESOURCES_FILE_PATH)
+            .expect(&format!("Failed to open file: {}", RESOURCES_FILE_PATH));
 
         from_reader(file).expect("Unable to load entity templates.")
     }

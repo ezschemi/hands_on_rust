@@ -13,11 +13,6 @@ mod use_items;
 
 use crate::prelude::*;
 
-use self::{
-    end_turn::{end_turn, end_turn_system},
-    use_items::use_items,
-};
-
 // one scheduler for each state
 
 pub fn build_input_scheduler() -> Schedule {

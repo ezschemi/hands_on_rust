@@ -29,7 +29,6 @@ pub fn map_render(ecs: &SubWorld, #[resource] map: &Map, #[resource] camera: &Ca
                 let glyph = match map.tiles[index] {
                     TileType::Floor => to_cp437('.'),
                     TileType::Wall => to_cp437('#'),
-                    _ => to_cp437('?'),
                 };
 
                 draw_batch.set(p - offset, ColorPair::new(tint, BLACK), glyph);

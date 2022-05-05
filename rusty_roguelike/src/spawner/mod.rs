@@ -1,7 +1,6 @@
 mod template;
 
 use crate::prelude::*;
-use template::Template;
 use template::Templates;
 
 const DEFAULT_FOV_PLAYER: i32 = 8;

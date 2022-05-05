@@ -47,7 +47,7 @@ pub fn player_input(
                                 <(Entity, &InInventory, &Weapon)>::query()
                                     .iter(ecs)
                                     .filter(|(_, i, _)| i.0 == player)
-                                    .for_each(|(e, i, w)| {
+                                    .for_each(|(e, _i, _w)| {
                                         commands.remove(*e);
                                     })
                             }
@@ -72,8 +72,6 @@ pub fn player_input(
             .find_map(|(entity, position)| Some((*entity, *position + delta)))
             .unwrap();
 
-        let mut did_something = false;
-
         if delta.x != 0 || delta.y != 0 {
             let mut hit_something = false;
 
@@ -83,7 +81,6 @@ pub fn player_input(
                 .filter(|(_, position)| **position == destination)
                 .for_each(|(entity, _)| {
                     hit_something = true;
-                    did_something = true;
                     commands.push((
                         (),
                         WantsToAttack {
@@ -95,7 +92,6 @@ pub fn player_input(
 
             // no enemies there, want to move to the destination
             if !hit_something {
-                did_something = true;
                 commands.push((
                     (),
                     WantsToMove {
